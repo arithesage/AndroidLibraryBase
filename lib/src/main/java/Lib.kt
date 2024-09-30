@@ -1,4 +1,4 @@
-package me.arithesage.kotlin.android.testlib
+package me.android.baselibrary
 
 class Lib {
 

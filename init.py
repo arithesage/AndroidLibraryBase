@@ -21,7 +21,7 @@ from shell import *
 class Files:
     AndroidManifest = "AndroidManifest.xml"
 
-    MainActivity = "MainActivity.kt"
+    Lib = "Lib.kt"
     AndroidTest = "ExampleInstrumentedTest.kt"
     Test = "ExampleUnitTest.kt"
     
@@ -75,7 +75,7 @@ def abort ():
 
 
 def check_if_already_initialized () -> None:
-    if file_exists (make_path (Paths.SRC_Main, Files.MainActivity)):
+    if file_exists (make_path (Paths.SRC_Main, Files.Lib)):
         echo ("Android Project already initialized.")
         echo ()
         exit (1)
@@ -91,9 +91,9 @@ def init_project (project_package: str):
     project_name = basename (realpath ("."))
     project_package_dirtree = project_package.replace (".", "/")
 
-    main_src = make_path (Paths.SRC_Main,
+    lib_src = make_path (Paths.SRC_Main,
                           project_package_dirtree, 
-                          Files.MainActivity)
+                          Files.Lib)
     
     androidtest_src = make_path (Paths.SRC_AndroidTest, 
                                  project_package_dirtree, 
@@ -137,8 +137,8 @@ def init_project (project_package: str):
         echo (Messages.InitializationFailed)
         abort ()
 
-    if not mv (make_path (Paths.SRC_Main, Files.MainActivity), 
-               main_src) \
+    if not mv (make_path (Paths.SRC_Main, Files.Lib), 
+               lib_src) \
     or not mv (make_path (Paths.SRC_AndroidTest, Files.AndroidTest), 
                androidtest_src) \
     or not mv (make_path (Paths.SRC_Test, Files.Test), 
@@ -151,12 +151,12 @@ def init_project (project_package: str):
 
 
     echo_va ("Updating $[0], $[1] and $[2] ...", 
-             Files.MainActivity, 
+             Files.Lib, 
              Files.AndroidTest, 
              Files.Test)
 
     if not replace_all_in (Placeholders.Package, project_package, 
-                           main_src) \
+                           lib_src) \
     or not replace_all_in (Placeholders.Package, project_package, 
                            androidtest_src) \
     or not replace_all_in (Placeholders.Package, project_package,
